@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MyColor.Application\MyColor.Application.csproj" />
+    <ProjectReference Include="..\MyColor.Domain\MyColor.Domain.csproj" />
+    <ProjectReference Include="..\MyColor.Infra.Data\MyColor.Infra.Data.csproj" />
+  </ItemGroup>
+
+</Project>
