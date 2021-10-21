@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.Infra.Data", "MyCol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.Infra.IoC", "MyColor.Infra.IoC\MyColor.Infra.IoC.csproj", "{0757D8E9-9097-4979-B1B9-0633B1FC0820}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.Domain.Tests", "MyColor.Domain.Tests\MyColor.Domain.Tests.csproj", "{C2D2733D-4966-42D1-BCF7-1B32C53FD687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0757D8E9-9097-4979-B1B9-0633B1FC0820}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0757D8E9-9097-4979-B1B9-0633B1FC0820}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0757D8E9-9097-4979-B1B9-0633B1FC0820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

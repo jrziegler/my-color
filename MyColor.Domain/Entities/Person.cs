@@ -24,14 +24,13 @@ namespace MyColor.Domain.Entities
         {
             //TODO: the name and lastname can be null?  
             DomainExceptionValidation.When(string.IsNullOrEmpty(name),
-                "Invalid name.Name is required");
+                "Invalid name. Name is required.");
 
             DomainExceptionValidation.When(string.IsNullOrEmpty(lastName),
-                "Invalid lastname. Lastname is required");
+                "Invalid lastname. Lastname is required.");
 
-            if(!string.IsNullOrEmpty(zipCode))
-                DomainExceptionValidation.When(zipCode.Length < 5,
-                   "Invalid zipcode, too short, minimum 5 characters");
+            DomainExceptionValidation.When(zipCode?.Length < 5,
+                "Invalid zipcode. Zipcode must have at least 5 characters.");
 
             this.Name = name;
             this.LastName = lastName;
