@@ -1,13 +1,10 @@
 ﻿using MyColor.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MyColor.Domain.Interfaces
 {
-    public interface PersonRepository
+    public interface IPersonRepository
     {
         Task<IEnumerable<Person>> GetPersonsAsync();
         Task<Person> GetPersonByIdAsync(int? id);

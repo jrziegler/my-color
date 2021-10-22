@@ -1,9 +1,5 @@
-﻿using MyColor.Domain.Validation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MyColor.Domain.Entities.Enums;
+using MyColor.Domain.Validation;
 
 namespace MyColor.Domain.Entities
 {
@@ -13,16 +9,15 @@ namespace MyColor.Domain.Entities
         public string LastName { get; private set; }
         public string ZipCode { get; private set; }
         public string City { get; private set; }
-        public string Color { get; private set; }
+        public int Color { get; private set; }
 
-        public Person(int id, string name, string lastName, string zipCode, string city, string color) : base(id)
+        public Person(int id, string name, string lastName, string zipCode, string city, int color) : base(id)
         {
             ValidateDomain(name, lastName, zipCode, city, color);
         }
 
-        private void ValidateDomain(string name, string lastName, string zipCode, string city, string color)
-        {
-            //TODO: the name and lastname can be null?  
+        private void ValidateDomain(string name, string lastName, string zipCode, string city, int color)
+        { 
             DomainExceptionValidation.When(string.IsNullOrEmpty(name),
                 "Invalid name. Name is required.");
 
