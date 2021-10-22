@@ -1,5 +1,4 @@
-﻿using MyColor.Domain.Entities.Enums;
-using MyColor.Domain.Validation;
+﻿using MyColor.Domain.Validation;
 
 namespace MyColor.Domain.Entities
 {

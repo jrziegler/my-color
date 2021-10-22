@@ -8,7 +8,7 @@ namespace MyColor.Domain.Interfaces
     {
         Task<IEnumerable<Person>> GetPersonsAsync();
         Task<Person> GetPersonByIdAsync(int? id);
-        Task<IEnumerable<Person>> GetPersonByColorAsync(string? color);
+        Task<IEnumerable<Person>> GetPersonByColorAsync(int? color);
         Task<Person> CreateAsync(Person person);
         Task<Person> UpdateAsync(Person person);
         Task<Person> RemoveAsync(Person person);
