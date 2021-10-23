@@ -8,4 +8,16 @@
     <ProjectReference Include="..\MyColor.Domain\MyColor.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="AutoMapper" />
+    <None Remove="DTOs\" />
+    <None Remove="Mappings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Mappings\" />
+  </ItemGroup>
 </Project>
