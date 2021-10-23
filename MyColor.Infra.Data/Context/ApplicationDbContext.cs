@@ -5,7 +5,7 @@ namespace MyColor.Infra.Data.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { }
 
         public DbSet<Person> Persons { get; set; }

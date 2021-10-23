@@ -22,12 +22,13 @@ namespace MyColor.Infra.Data.EntitiesConfiguration
             builder.Property(p => p.ZipCode).HasMaxLength(10);
             builder.Property(p => p.City).HasMaxLength(100);
 
-            builder.HasData(GetPersonsFromCsv());
+            builder.HasData(SeedDataFromCsv());
         }
 
-        private static IEnumerable<Person> GetPersonsFromCsv()
+        private static IEnumerable<Person> SeedDataFromCsv()
         {
             string pathToCsvFile = string.Concat(Environment.CurrentDirectory, @"\Repositories\sample-input.csv");
+            //TODO: try...catch
             using (var reader = new StreamReader(pathToCsvFile))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))

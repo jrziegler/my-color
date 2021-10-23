@@ -17,15 +17,6 @@ namespace MyColor.Infra.IoC
             services.AddScoped<IPersonRepository, PersonRepository>();
 
             return services;
-
-            // TODO:
-            // in file appsettings add:
-            //"ConnectionStrings": {
-            //  "DefaultConnection": "DbInMemory"
-            //}
-            //
-            // register the service in the startup class
-            // services.AddInfrastructure(Configuration);
         }
     }
 }

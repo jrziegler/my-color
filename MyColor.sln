@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.Infra.IoC", "MyColo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.Domain.Tests", "MyColor.Domain.Tests\MyColor.Domain.Tests.csproj", "{C2D2733D-4966-42D1-BCF7-1B32C53FD687}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyColor.API", "MyColor.API\MyColor.API.csproj", "{72C24B31-BF8B-4947-9C08-6EBBF7663639}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2D2733D-4966-42D1-BCF7-1B32C53FD687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C24B31-BF8B-4947-9C08-6EBBF7663639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C24B31-BF8B-4947-9C08-6EBBF7663639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C24B31-BF8B-4947-9C08-6EBBF7663639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C24B31-BF8B-4947-9C08-6EBBF7663639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

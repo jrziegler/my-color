@@ -11,6 +11,7 @@ namespace MyColor.Infra.Data.Repositories
     public class PersonRepository : IPersonRepository
     {
         ApplicationDbContext _personContext;
+
         public PersonRepository(ApplicationDbContext context)
         {
             this._personContext = context;
