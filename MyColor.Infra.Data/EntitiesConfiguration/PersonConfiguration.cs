@@ -1,14 +1,14 @@
 ﻿using CsvHelper;
+using CsvHelper.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MyColor.Domain.Entities;
+using MyColor.Infra.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyColor.Infra.Data.EntitiesConfiguration
 {
@@ -22,19 +22,130 @@ namespace MyColor.Infra.Data.EntitiesConfiguration
             builder.Property(p => p.ZipCode).HasMaxLength(10);
             builder.Property(p => p.City).HasMaxLength(100);
 
-            builder.HasData(SeedDataFromCsv());
+            //builder.HasData(SeedDataFromCsv());
+            //builder.HasData(SeedDataTest());
         }
 
-        private static IEnumerable<Person> SeedDataFromCsv()
+        private static IEnumerable<Person> SeedDataTest()
         {
-            string pathToCsvFile = string.Concat(Environment.CurrentDirectory, @"\Repositories\sample-input.csv");
-            //TODO: try...catch
-            using (var reader = new StreamReader(pathToCsvFile))
+            List<Person> people = new List<Person>();
+            people.Add(
+                new Person(
+                            1,
+                            "Tony",
+                            "Stark",
+                            "10200",
+                            "California",
+                            4
+                )
+            );
+            people.Add(
+                new Person(
+                            2,
+                            "Steve",
+                            "Rogers",
+                            "10201",
+                            "California",
+                            1
+                )
+            );
+
+            return people;
+        }
+
+        private async void SeedDataFromCsv()
+        {
+            /*
+            List<Person> people = new List<Person>();
+            people.Add(
+                new Person(
+                            1,
+                            "Tony",
+                            "Stark",
+                            "10200",
+                            "California",
+                            4
+                )
+            );
+            people.Add(
+                new Person(
+                            2,
+                            "Steve",
+                            "Rogers",
+                            "10201",
+                            "California",
+                            1
+                )
+            );
+            */
+            //var people = LoadFromCsv(Path.Combine(Environment.CurrentDirectory, $"../MyColor.Infra.Data/Repositories/sample-input.csv"));
+            var people = ReadPersonsFromFile();
+/*
+            foreach (Person p in people)
             {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                _personContext.Add(p);
+            }
+            await _personContext.SaveChangesAsync();*/
+        }
+
+        /**********************************************************************/
+
+        private IEnumerable<Person> ReadPersonsFromFile()
+        {
+            var results = new List<Person>();
+
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                HasHeaderRecord = false,
+                TrimOptions = TrimOptions.Trim,
+                MissingFieldFound = null,
+                IgnoreBlankLines = true,
+                LineBreakInQuotedFieldIsBadData = true,
+
+            };
+
+            try
+            {
+                using (var reader = new StreamReader(Path.Combine(Environment.CurrentDirectory, $"../MyColor.Infra.Data/Repositories/sample-input.csv")))
                 {
-                    return csv.GetRecords<Person>();
+                    using (var csv = new CsvReader(reader, config))
+                    {
+                        var records = csv.GetRecords<PersonFromCsv>();
+
+                        foreach (PersonFromCsv r in records)
+                        {
+                            string[] record = r.ToCsv().Split(",");
+                            if (record.Length < 4)
+                            {
+                                //TODO: Make a better exception handler 
+                                //throw new Exception($"Row {csv.Context.Parser.RawRow} with content: {record.ToString()} does not conform to record type.");
+                            }
+                            if (string.IsNullOrWhiteSpace(record.ElementAt(2)) || string.IsNullOrWhiteSpace(record.ElementAt(3)))
+                            {
+                                // TODO: Make a better exception handler
+                                //throw new Exception($"Row {csv.Context.Parser.RawRow} with content: {record.ToString()} does not conform to record type.");
+                            }
+                            else
+                            {
+                                Person p = new Person(
+                                        csv.Context.Parser.RawRow,
+                                        r.Name,
+                                        r.LastName,
+                                        r.GetZipcode(),
+                                        r.GetCityName(),
+                                        (int)r.Color
+                                    );
+                                results.Add(p);
+                            }
+                        }
+                    }
                 }
+                return results;
+            }
+            catch (Exception e)
+            {
+                //TODO: Error in Log
+                throw new Exception(e.Message);
             }
         }
     }

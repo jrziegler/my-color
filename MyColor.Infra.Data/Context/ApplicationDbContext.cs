@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyColor.Domain.Entities;
-using System;
+
 namespace MyColor.Infra.Data.Context
 {
     public class ApplicationDbContext : DbContext

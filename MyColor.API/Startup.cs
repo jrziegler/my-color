@@ -45,6 +45,15 @@ namespace MyColor.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyColor.API v1"));
             }
 
+            // use this service every time the program starts
+            var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+            using (var scope = scopeFactory.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetService<Infra.Data.Interfaces.IDbInitializer>();
+                dbInitializer.Initialize();
+                dbInitializer.SeedData();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

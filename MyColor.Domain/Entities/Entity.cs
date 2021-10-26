@@ -15,6 +15,8 @@ namespace MyColor.Domain.Entities
         {
             DomainExceptionValidation.When(id < 1,
                    $"Invalid id: {id}. Id must be greater than 0.");
+
+            Id = id;
         }
     }
 }

@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Folder Include="Identity\" />
+    <Folder Include="Mappings\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,4 +27,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Mappings\" />
+    <None Remove="Interfaces\" />
+  </ItemGroup>
 </Project>

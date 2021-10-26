@@ -12,6 +12,8 @@
     <None Remove="AutoMapper" />
     <None Remove="DTOs\" />
     <None Remove="Mappings\" />
+    <None Remove="Interfaces\" />
+    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
@@ -19,5 +21,7 @@
   <ItemGroup>
     <Folder Include="DTOs\" />
     <Folder Include="Mappings\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 </Project>
