@@ -7,6 +7,7 @@ using MyColor.Application.Services;
 using MyColor.Domain.Interfaces;
 using MyColor.Infra.Data.Context;
 using MyColor.Infra.Data.Interfaces;
+using MyColor.Infra.Data.Mappings;
 using MyColor.Infra.Data.Repositories;
 
 namespace MyColor.Infra.IoC
@@ -21,7 +22,10 @@ namespace MyColor.Infra.IoC
             services.AddScoped<IDbInitializer, DbInitializer>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonService, PersonService>();
+            services.AddScoped<IFileReader, CsvFileReader>();
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+            //services.AddAutoMapper(typeof(DtoToDomainMappingProfile));
+            services.AddAutoMapper(typeof(CsvToPersonFromCsvMappingProfile));
 
             return services;
         }

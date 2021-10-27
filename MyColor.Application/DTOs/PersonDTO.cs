@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyColor.Application.DTOs
@@ -28,9 +27,5 @@ namespace MyColor.Application.DTOs
 
         [DisplayName("color")]
         public string Color { get;  set; }
-
-        public PersonDTO()
-        {
-        }
     }
 }

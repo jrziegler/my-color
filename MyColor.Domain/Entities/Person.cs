@@ -8,14 +8,17 @@ namespace MyColor.Domain.Entities
         public string LastName { get; private set; }
         public string ZipCode { get; private set; }
         public string City { get; private set; }
-        public int Color { get; private set; }
+        public int ColorId { get; private set; }
 
-        public Person(int id, string name, string lastName, string zipCode, string city, int color) : base(id)
+        public Person() 
+        { } // Necessary because of AutoMapper
+
+        public Person(int id, string name, string lastName, string zipCode, string city, int colorId) : base(id)
         {
-            ValidateDomain(name, lastName, zipCode, city, color);
+            ValidateDomain(name, lastName, zipCode, city, colorId);
         }
 
-        private void ValidateDomain(string name, string lastName, string zipCode, string city, int color)
+        private void ValidateDomain(string name, string lastName, string zipCode, string city, int colorId)
         { 
             DomainExceptionValidation.When(string.IsNullOrEmpty(name),
                 "Invalid name. Name is required.");
@@ -30,7 +33,7 @@ namespace MyColor.Domain.Entities
             this.LastName = lastName;
             this.ZipCode = zipCode;
             this.City = city;
-            this.Color = color;
+            this.ColorId = colorId;
         }
     }
 }

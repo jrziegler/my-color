@@ -34,30 +34,67 @@ namespace MyColor.API.Controllers
 
             return Ok(persons);
         }
-        /*
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [HttpGet("{id:int}", Name = "GetPerson")]
+        public async Task<ActionResult<PersonDTO>> Get(int id)
         {
-            return "value";
+            var person = await this._personService.GetPersonByIdAsync(id);
+            if (person == null)
+            {
+                return NotFound("Person not found.");
+            }
+
+            return Ok(person);
+        }
+ 
+        [HttpGet("color/{color}")]
+        public async Task<ActionResult<IEnumerable<PersonDTO>>> Get(string color)
+        {
+            var persons = await this._personService.GetPersonByColorAsync(color);
+            if (!persons.Any())
+            {
+                return NotFound("Persons not found.");
+            }
+
+            return Ok(persons);
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult> Post([FromBody] PersonDTO personDto)
         {
+            if (personDto == null)
+                return BadRequest("Invalid data.");
+
+            await _personService.AddAsync(personDto);
+
+            return new CreatedAtRouteResult("GetPerson", new { id = personDto.Id }, personDto);
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult> Put(int id, [FromBody] PersonDTO personDto)
         {
+            if (id != personDto.Id)
+                return BadRequest();
+
+            if (personDto == null)
+                return BadRequest("Invalid data.");
+
+            await _personService.UpdateAsync(personDto);
+
+            return Ok(personDto);
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
         {
-        }*/
+            var personDto = await this._personService.GetPersonByIdAsync(id);
+
+            if (personDto == null)
+                return BadRequest("Person not found.");
+
+            await this._personService.RemoveAsync(id);
+
+            return Ok(personDto);
+        }
     }
 }

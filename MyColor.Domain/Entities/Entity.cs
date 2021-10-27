@@ -4,7 +4,10 @@ namespace MyColor.Domain.Entities
 {
     public abstract class Entity
     {
-        public int Id { get; protected set; }
+        public int Id { get; private set; }
+
+        public Entity()
+        { } // Necessary because of AutoMapper 
 
         public Entity(int id)
         {

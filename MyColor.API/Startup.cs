@@ -45,7 +45,7 @@ namespace MyColor.API
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyColor.API v1"));
             }
 
-            // use this service every time the program starts
+            // use this service every time the program starts in order to populate the inmemory database
             var scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
             {

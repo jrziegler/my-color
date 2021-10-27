@@ -1,73 +1,84 @@
-﻿using System;
+﻿using CsvHelper;
+using CsvHelper.Configuration;
+using MyColor.Domain.Entities;
+using MyColor.Infra.Data.Interfaces;
+using MyColor.Infra.Data.Mappings;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
 namespace MyColor.Infra.Data.Repositories
 {
-    public class CsvFileReader : IDisposable
+    public class CsvFileReader : IFileReader
     {
-        private readonly bool _containsHeader;
-        private int counter;
-        private string[] lines;
-        private string[] currentFields;
-        private string[] headers;
-        private readonly string _delimiter;
+        private const string FILE_NAME = "sample-input.csv";
+        private const string FILE_PATH = "../MyColor.Infra.Data/Repositories/";
 
-        public string[] Lines { get; private set; }
+        public CsvFileReader()
+        { }
 
-        public CsvFileReader(string filePath, string delimiter, bool containsHeader)
+        public IEnumerable<Person> LoadDataFromFile()
         {
-            _delimiter = delimiter;
-            _containsHeader = containsHeader;
+            List<Person> listOfPersons = new();
+            List<string> listOfBadRecords = new();
 
-            Load(filePath);
-        }
-
-        private void Load(string filePath)
-        {
-            lines = File.ReadAllLines(filePath);
-            if (_containsHeader)
+            CsvConfiguration config = new(CultureInfo.InvariantCulture)
             {
-                headers = lines[0].Split(_delimiter);
-                counter++;
-            }
-        }
+                HasHeaderRecord = false,
+                TrimOptions = TrimOptions.Trim,
+                MissingFieldFound = null,
+                IgnoreBlankLines = true,
+                LineBreakInQuotedFieldIsBadData = true,
+            };
 
-        public bool Read()
-        {
-            if (counter >= lines.Length)
+            try
             {
-                return false;
+                using (StreamReader reader = new(Path.Combine(Environment.CurrentDirectory, $"{FILE_PATH}{FILE_NAME}")))
+                {
+                    using (CsvReader csv = new(reader, config))
+                    {
+                        csv.Context.RegisterClassMap<CsvToPersonFromCsvMappingProfile>();
+
+                        var records = csv.GetRecords<PersonFromCsv>();
+
+                        foreach (PersonFromCsv r in records)
+                        {
+                            string[] record = r.ToCsv().Split(",");
+                            if (string.IsNullOrWhiteSpace(record.ElementAt(2)) || string.IsNullOrWhiteSpace(record.ElementAt(3)))
+                            {
+                                listOfBadRecords.Add($"RowNo: {csv.Context.Parser.RawRow}, Record: {csv.Parser.RawRecord}");
+                            }
+                            else
+                            {
+                                Person p = new(
+                                        csv.Context.Parser.RawRow,
+                                        r.Name,
+                                        r.LastName,
+                                        r.GetZipcode(),
+                                        r.GetCityName(),
+                                        (int)r.Color
+                                    );
+
+                                listOfPersons.Add(p);
+                            }
+                        }
+                    }
+                }
+                return listOfPersons;
             }
-
-            var line = lines[counter];
-            counter++;
-            currentFields = line.Split(_delimiter);
-
-            return true;
-        }
-
-        public string GetField(string name)
-        {
-            if (!_containsHeader)
-                return string.Empty;
-
-            if (!headers.Contains(name))
-                return string.Empty;
-
-            var indexOfField = Array.IndexOf(headers, name);
-            return GetIndex(indexOfField);
-        }
-
-        public string GetIndex(int index)
-        {
-            return currentFields[index];
-        }
-
-        public void Dispose()
-        {
-            lines = null;
-            GC.SuppressFinalize(this);
+            catch (Exception e)
+            {
+                //TODO: Error in Log
+                throw new Exception(e.Message);
+            }
+            finally
+            {
+                if (listOfBadRecords.Any())
+                    //TODO: list of bad records inside a log
+                    listOfBadRecords.Count();
+            }
         }
     }
 }
