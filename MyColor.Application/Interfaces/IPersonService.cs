@@ -9,7 +9,7 @@ namespace MyColor.Application.Interfaces
         Task<IEnumerable<PersonDTO>> GetPersonsAsync();
         Task<PersonDTO> GetPersonByIdAsync(int? id);
         Task<IEnumerable<PersonDTO>> GetPersonByColorAsync(string color);
-        Task AddAsync(PersonDTO personDto);
+        Task<PersonDTO> AddAsync(PersonDTO personDto);
         Task UpdateAsync(PersonDTO personDto);
         Task RemoveAsync(int? id);
     }

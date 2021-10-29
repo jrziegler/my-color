@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MyColor.Application.DTOs;
 using MyColor.Domain.Entities;
+using MyColor.Domain.Utils;
 
 namespace MyColor.Application.Mappings
 {
@@ -8,7 +9,6 @@ namespace MyColor.Application.Mappings
     {
         public DomainToDTOMappingProfile()
         {
-            //TODO: Try...Catch (ColorExceptionValidation)
             CreateMap<Person, PersonDTO>()
                 .ForMember(pDto => pDto.Id, p => p.MapFrom(source => source.Id))
                 .ForMember(pDto => pDto.City, p => p.MapFrom(source => source.City))

@@ -29,6 +29,9 @@ namespace MyColor.Domain.Entities
             DomainExceptionValidation.When(zipCode?.Length < 5,
                 "Invalid zipcode. Zipcode must have at least 5 characters.");
 
+            DomainExceptionValidation.When(zipCode?.Length > 10,
+                "Invalid zipcode. Zipcode contains more than 10 characters.");
+
             this.Name = name;
             this.LastName = lastName;
             this.ZipCode = zipCode;

@@ -24,7 +24,6 @@ namespace MyColor.Infra.IoC
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IFileReader, CsvFileReader>();
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
-            //services.AddAutoMapper(typeof(DtoToDomainMappingProfile));
             services.AddAutoMapper(typeof(CsvToPersonFromCsvMappingProfile));
 
             return services;

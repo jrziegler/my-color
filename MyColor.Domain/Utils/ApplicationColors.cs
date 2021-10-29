@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using MyColor.Domain.Entities;
 using MyColor.Domain.Validation;
 
-namespace MyColor.Domain.Entities
+namespace MyColor.Domain.Utils
 {
     public static class ApplicationColors
     {
@@ -28,8 +29,8 @@ namespace MyColor.Domain.Entities
 
         public static int GetColorIdByName(string name)
         {
-            Color? color = ListOfColors.FirstOrDefault(x => x.Name == name);
-            DomainExceptionValidation.When(color == null, $"Color with name {name} not found.");
+            Color? color = ListOfColors.FirstOrDefault(x => x.Name == name.ToLower());
+            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} not found.");
 
             return (int)color?.Id;
         }

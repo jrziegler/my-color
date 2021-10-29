@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
+using MyColor.Application.ApplicationException;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
 using MyColor.Domain.Entities;
 using MyColor.Domain.Interfaces;
+using MyColor.Domain.Utils;
+using MyColor.Domain.Validation;
 
 namespace MyColor.Application.Services
 {
@@ -40,16 +43,44 @@ namespace MyColor.Application.Services
             return this._mapper.Map<IEnumerable<PersonDTO>>(personsEntity);
         }
 
-        public async Task AddAsync(PersonDTO personDto)
+        public async Task<PersonDTO> AddAsync(PersonDTO personDto)
         {
-            var personEntity = this._mapper.Map<Person>(personDto);
-            await this._personRepository.CreateAsync(personEntity);
+            if (personDto.Id != 0)
+            {
+                Person p = await this._personRepository.GetPersonByIdAsync(personDto.Id);
+
+                if (p != null)
+                    throw new AppServiceException($"Person cannot be insert. The id {p.Id} already exists.");
+            }
+            try
+            {
+                var personEntity = this._mapper.Map<Person>(personDto);
+                personDto = this._mapper.Map<PersonDTO>(await this._personRepository.CreateAsync(personEntity));
+                return personDto;
+            }
+            catch(Exception e)
+            {
+                if (e.InnerException != null)
+                    throw e.InnerException;
+                else
+                    throw new Exception(e.Message);
+            }
         }
 
         public async Task UpdateAsync(PersonDTO personDto)
         {
-            var personEntity = this._mapper.Map<Person>(personDto);
-            await this._personRepository.UpdateAsync(personEntity);
+            try
+            {
+                var personEntity = this._mapper.Map<Person>(personDto);
+                await this._personRepository.UpdateAsync(personEntity);
+            }
+            catch (Exception e)
+            {
+                if (e.InnerException != null)
+                    throw e.InnerException;
+                else
+                    throw new Exception(e.Message);
+            }
         }
 
         public async Task RemoveAsync(int? id)

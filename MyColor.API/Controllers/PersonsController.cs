@@ -10,7 +10,7 @@ using MyColor.Application.Interfaces;
 
 namespace MyColor.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/persons/")]
     [ApiController]
     public class PersonsController : ControllerBase
     {
@@ -22,7 +22,6 @@ namespace MyColor.API.Controllers
                 throw new ArgumentNullException(nameof(personService));
         }
 
-        // GET: api/values
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get()
         {
@@ -65,23 +64,35 @@ namespace MyColor.API.Controllers
             if (personDto == null)
                 return BadRequest("Invalid data.");
 
-            await _personService.AddAsync(personDto);
-
-            return new CreatedAtRouteResult("GetPerson", new { id = personDto.Id }, personDto);
+            try
+            {
+                personDto = await _personService.AddAsync(personDto);
+                return new CreatedAtRouteResult("GetPerson", new { id = personDto.Id }, personDto);
+            }
+            catch(Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] PersonDTO personDto)
         {
             if (id != personDto.Id)
-                return BadRequest();
+                return BadRequest("The field id does not conform with requested in the body.");
 
             if (personDto == null)
                 return BadRequest("Invalid data.");
 
-            await _personService.UpdateAsync(personDto);
-
-            return Ok(personDto);
+            try
+            {
+                await _personService.UpdateAsync(personDto);
+                return Ok(personDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpDelete("{id:int}")]
