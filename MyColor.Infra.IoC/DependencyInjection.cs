@@ -10,6 +10,8 @@ using MyColor.Infra.Data.Csv;
 using MyColor.Infra.Data.Interfaces;
 using MyColor.Infra.Data.Mappings;
 using MyColor.Infra.Data.Repositories;
+using MyColor.Infra.Logging.Entities;
+using MyColor.Infra.Logging.Interfaces;
 
 namespace MyColor.Infra.IoC
 {
@@ -24,6 +26,7 @@ namespace MyColor.Infra.IoC
             services.AddScoped<IPersonRepository, PersonRepository>();
             services.AddScoped<IPersonService, PersonService>();
             services.AddScoped<IFileReader, CsvFileReader>();
+            services.AddSingleton<ILoggerManager, LoggerManager>();
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
             services.AddAutoMapper(typeof(CsvToPersonFromCsvMappingProfile));
 

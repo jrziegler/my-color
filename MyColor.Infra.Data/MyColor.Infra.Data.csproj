@@ -11,7 +11,7 @@
   <ItemGroup>
     <Folder Include="Identity\" />
     <Folder Include="Mappings\" />
-    <Folder Include="Data\" />
+    <Folder Include="Csv\" />
   </ItemGroup>
 
   <ItemGroup>

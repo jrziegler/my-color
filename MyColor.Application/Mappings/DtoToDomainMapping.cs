@@ -6,9 +6,9 @@ namespace MyColor.Application.Mappings
 {
     public static class DtoToDomainMapping
     {
-        public static Person MapDtoToDomain(PersonDTO personDto)
+        public static Person MapToDomain(this PersonDTO personDto)
         {
-            Person p = new (
+            return new Person(
                 personDto.Id,
                 personDto.Name,
                 personDto.LastName,
@@ -16,8 +16,6 @@ namespace MyColor.Application.Mappings
                 personDto.City,
                 ApplicationColors.GetColorIdByName(personDto.Color)
             );
-
-            return p;
         }
     }
 }

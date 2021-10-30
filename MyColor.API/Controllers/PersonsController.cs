@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
+using MyColor.Infra.Logging.Interfaces;
 
 namespace MyColor.API.Controllers
 {
@@ -13,11 +14,15 @@ namespace MyColor.API.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IPersonService _personService;
+        private readonly ILoggerManager _logger;
 
-        public PersonsController(IPersonService personService)
+        public PersonsController(IPersonService personService, ILoggerManager logger)
         {
             this._personService = personService ??
                 throw new ArgumentNullException(nameof(personService));
+
+            this._logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -150,7 +155,11 @@ namespace MyColor.API.Controllers
             var personDto = await this._personService.GetPersonByIdAsync(id);
 
             if (personDto == null)
-                return NotFound("Person not found.");
+            {
+                string msg = "Person not found.";
+                this._logger.LogWarn(msg);
+                return NotFound(msg);
+            }
 
             try
             {

@@ -52,14 +52,14 @@ namespace MyColor.Application.Services
                     throw new AppServiceException($"Person cannot be insert. The id {p.Id} already exists.");
             }
 
-            Person personEntity = DtoToDomainMapping.MapDtoToDomain(personDto);
+            Person personEntity = personDto.MapToDomain();
             personDto = this._mapper.Map<PersonDTO>(await this._personRepository.CreateAsync(personEntity));
             return personDto;
         }
 
         public async Task UpdateAsync(PersonDTO personDto)
         {
-            Person personEntity = DtoToDomainMapping.MapDtoToDomain(personDto);
+            Person personEntity = personDto.MapToDomain();
             await this._personRepository.UpdateAsync(personEntity);
         }
 

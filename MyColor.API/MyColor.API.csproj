@@ -16,6 +16,9 @@
   <ItemGroup>
     <None Remove="Swashbuckle.AspNetCore" />
     <None Remove="Controllers\" />
+    <None Remove="NLog" />
+    <None Remove="NLog.Config" />
+    <None Remove="NLog.Schema" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />

@@ -13,6 +13,7 @@
     <ProjectReference Include="..\MyColor.Application\MyColor.Application.csproj" />
     <ProjectReference Include="..\MyColor.Domain\MyColor.Domain.csproj" />
     <ProjectReference Include="..\MyColor.Infra.Data\MyColor.Infra.Data.csproj" />
+    <ProjectReference Include="..\MyColor.Infra.Logging\MyColor.Infra.Logging.csproj" />
   </ItemGroup>
 
   <ItemGroup>

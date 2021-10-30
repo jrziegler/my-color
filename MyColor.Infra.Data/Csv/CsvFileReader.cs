@@ -46,7 +46,10 @@ namespace MyColor.Infra.Data.Csv
                         foreach (PersonFromCsv r in records)
                         {
                             string[] record = r.ToCsv().Split(",");
-                            if (string.IsNullOrWhiteSpace(record.ElementAt(2)) || string.IsNullOrWhiteSpace(record.ElementAt(3)))
+                            if (string.IsNullOrWhiteSpace(record.ElementAt(0)) ||
+                                string.IsNullOrWhiteSpace(record.ElementAt(1)) ||
+                                string.IsNullOrWhiteSpace(record.ElementAt(2)) ||
+                                string.IsNullOrWhiteSpace(record.ElementAt(3)))
                             {
                                 listOfBadRecords.Add($"RowNo: {csv.Context.Parser.RawRow}, Record: {csv.Parser.RawRecord}");
                             }
