@@ -7,7 +7,7 @@ namespace MyColor.Infra.Data.Csv
         public string Name { get; set; }
         public string LastName { get; set; }
         [Optional]
-        public string? CompleteAdress { get; set; }
+        public string CompleteAdress { get; set; }
         [Optional]
         public int? Color { get; set; }
 

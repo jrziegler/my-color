@@ -6,12 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MyColor.API.Controllers
 {
-    [Route("api/persons/")]
     [ApiController]
+    [Route("api/persons/")]
     public class PersonsController : ControllerBase
     {
         private readonly IPersonService _personService;
@@ -22,6 +20,10 @@ namespace MyColor.API.Controllers
                 throw new ArgumentNullException(nameof(personService));
         }
 
+        /// <summary>
+        /// Method used to get a list of persons.
+        /// </summary>
+        /// <returns>A list of persons with they favorite color.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get()
         {
@@ -41,6 +43,11 @@ namespace MyColor.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to get a person by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>A person with his favorite color.</returns>
         [HttpGet("{id:int}", Name = "GetPerson")]
         public async Task<ActionResult<PersonDTO>> Get(int id)
         {
@@ -59,7 +66,12 @@ namespace MyColor.API.Controllers
                 return BadRequest(e.Message);
             }
         }
- 
+
+        /// <summary>
+        /// Method used to get a list of persons by color.
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>A list of persons, which the favorite color is equal the parameter.</returns>
         [HttpGet("color/{color}")]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get(string color)
         {
@@ -79,6 +91,11 @@ namespace MyColor.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to add a new person to the system.
+        /// </summary>
+        /// <param name="personDto"></param>
+        /// <returns>The person created.</returns>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PersonDTO personDto)
         {
@@ -96,6 +113,12 @@ namespace MyColor.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to change an atribute from a person.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="personDto"></param>
+        /// <returns>Changed person.</returns>
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] PersonDTO personDto)
         {
@@ -116,13 +139,18 @@ namespace MyColor.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to delete a person.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The deleted person.</returns>
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
             var personDto = await this._personService.GetPersonByIdAsync(id);
 
             if (personDto == null)
-                return BadRequest("Person not found.");
+                return NotFound("Person not found.");
 
             try
             {
