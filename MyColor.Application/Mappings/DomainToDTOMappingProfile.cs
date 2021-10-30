@@ -16,14 +16,6 @@ namespace MyColor.Application.Mappings
                 .ForMember(pDto => pDto.Name, p => p.MapFrom(source => source.Name))
                 .ForMember(pDto => pDto.ZipCode, p => p.MapFrom(source => source.ZipCode))
                 .ForMember(pDto => pDto.Color, p => p.MapFrom(source => ApplicationColors.GetColorNameById(source.ColorId)));
-
-            CreateMap<PersonDTO, Person>()
-                .ForMember(p => p.Id, pDto => pDto.MapFrom(source => source.Id))
-                .ForMember(p => p.City, pDto => pDto.MapFrom(source => source.City))
-                .ForMember(p => p.LastName, pDto => pDto.MapFrom(source => source.LastName))
-                .ForMember(p => p.Name, pDto => pDto.MapFrom(source => source.Name))
-                .ForMember(p => p.ZipCode, pDto => pDto.MapFrom(source => source.ZipCode))
-                .ForMember(p => p.ColorId, pDto => pDto.MapFrom(source => ApplicationColors.GetColorIdByName(source.Color)));
         }
     }
 }

@@ -9,12 +9,12 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace MyColor.Infra.Data.Repositories
+namespace MyColor.Infra.Data.Csv
 {
     public class CsvFileReader : IFileReader
     {
         private const string FILE_NAME = "sample-input.csv";
-        private const string FILE_PATH = "../MyColor.Infra.Data/Repositories/";
+        private const string FILE_PATH = "../MyColor.Infra.Data/Csv/";
 
         public CsvFileReader()
         { }

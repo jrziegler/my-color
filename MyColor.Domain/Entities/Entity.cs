@@ -6,9 +6,6 @@ namespace MyColor.Domain.Entities
     {
         public int Id { get; private set; }
 
-        public Entity()
-        { } // Necessary because of AutoMapper 
-
         public Entity(int id)
         {
             ValidateId(id);

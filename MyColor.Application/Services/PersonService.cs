@@ -5,10 +5,10 @@ using AutoMapper;
 using MyColor.Application.ApplicationException;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
+using MyColor.Application.Mappings;
 using MyColor.Domain.Entities;
 using MyColor.Domain.Interfaces;
 using MyColor.Domain.Utils;
-using MyColor.Domain.Validation;
 
 namespace MyColor.Application.Services
 {
@@ -32,13 +32,12 @@ namespace MyColor.Application.Services
 
         public async Task<PersonDTO> GetPersonByIdAsync(int? id)
         {
-            var personEntity = await this._personRepository.GetPersonByIdAsync(id);
+            Person personEntity = await this._personRepository.GetPersonByIdAsync(id);
             return this._mapper.Map<PersonDTO>(personEntity);
         }
 
         public async Task<IEnumerable<PersonDTO>> GetPersonByColorAsync(string color)
         {
-            //TODO: Verify the return value from personRepository (FirstOrDefault?)
             var personsEntity = await this._personRepository.GetPersonByColorAsync(ApplicationColors.GetColorIdByName(color));
             return this._mapper.Map<IEnumerable<PersonDTO>>(personsEntity);
         }
@@ -52,40 +51,21 @@ namespace MyColor.Application.Services
                 if (p != null)
                     throw new AppServiceException($"Person cannot be insert. The id {p.Id} already exists.");
             }
-            try
-            {
-                var personEntity = this._mapper.Map<Person>(personDto);
-                personDto = this._mapper.Map<PersonDTO>(await this._personRepository.CreateAsync(personEntity));
-                return personDto;
-            }
-            catch(Exception e)
-            {
-                if (e.InnerException != null)
-                    throw e.InnerException;
-                else
-                    throw new Exception(e.Message);
-            }
+
+            Person personEntity = DtoToDomainMapping.MapDtoToDomain(personDto);
+            personDto = this._mapper.Map<PersonDTO>(await this._personRepository.CreateAsync(personEntity));
+            return personDto;
         }
 
         public async Task UpdateAsync(PersonDTO personDto)
         {
-            try
-            {
-                var personEntity = this._mapper.Map<Person>(personDto);
-                await this._personRepository.UpdateAsync(personEntity);
-            }
-            catch (Exception e)
-            {
-                if (e.InnerException != null)
-                    throw e.InnerException;
-                else
-                    throw new Exception(e.Message);
-            }
+            Person personEntity = DtoToDomainMapping.MapDtoToDomain(personDto);
+            await this._personRepository.UpdateAsync(personEntity);
         }
 
         public async Task RemoveAsync(int? id)
         {
-            var personEntity = this._personRepository.GetPersonByIdAsync(id).Result;
+            Person personEntity = this._personRepository.GetPersonByIdAsync(id).Result;
             await this._personRepository.RemoveAsync(personEntity);
         }
     }

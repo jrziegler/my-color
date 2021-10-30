@@ -10,9 +10,6 @@ namespace MyColor.Domain.Entities
         public string City { get; private set; }
         public int ColorId { get; private set; }
 
-        public Person() 
-        { } // Necessary because of AutoMapper
-
         public Person(int id, string name, string lastName, string zipCode, string city, int colorId) : base(id)
         {
             ValidateDomain(name, lastName, zipCode, city, colorId);

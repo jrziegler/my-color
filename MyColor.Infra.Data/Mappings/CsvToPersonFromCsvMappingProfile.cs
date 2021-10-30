@@ -1,5 +1,5 @@
 ﻿using CsvHelper.Configuration;
-using MyColor.Infra.Data.Repositories;
+using MyColor.Infra.Data.Csv;
 
 namespace MyColor.Infra.Data.Mappings
 {

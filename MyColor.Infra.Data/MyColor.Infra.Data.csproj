@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="Identity\" />
     <Folder Include="Mappings\" />
+    <Folder Include="Data\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,5 +30,6 @@
   <ItemGroup>
     <None Remove="Mappings\" />
     <None Remove="Interfaces\" />
+    <None Remove="Data\" />
   </ItemGroup>
 </Project>

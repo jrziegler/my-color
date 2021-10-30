@@ -17,14 +17,22 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
+    "Custom": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:25711;http://localhost:38901",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
     "MyColor.API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "weatherforecast",
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:14492;http://localhost:33149",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:14492;http://localhost:33149"
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace MyColor.Infra.Data.Repositories
+namespace MyColor.Infra.Data.Csv
 {
     public sealed class PersonFromCsv
     {

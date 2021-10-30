@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using MyColor.Domain.Entities;
-using MyColor.Infra.Data.Context;
 using MyColor.Infra.Data.Interfaces;
 
-namespace MyColor.Infra.Data.Repositories
+namespace MyColor.Infra.Data.Context
 {
     public class DbInitializer : IDbInitializer
     {

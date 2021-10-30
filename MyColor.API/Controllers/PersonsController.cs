@@ -25,37 +25,58 @@ namespace MyColor.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get()
         {
-            var persons = await this._personService.GetPersonsAsync();
-            if(persons == null)
+            try
             {
-                return NotFound("Persons not found.");
-            }
+                var persons = await this._personService.GetPersonsAsync();
+                if (persons == null)
+                {
+                    return NotFound("Persons not found.");
+                }
 
-            return Ok(persons);
+                return Ok(persons);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id:int}", Name = "GetPerson")]
         public async Task<ActionResult<PersonDTO>> Get(int id)
         {
-            var person = await this._personService.GetPersonByIdAsync(id);
-            if (person == null)
+            try
             {
-                return NotFound("Person not found.");
-            }
+                var person = await this._personService.GetPersonByIdAsync(id);
+                if (person == null)
+                {
+                    return NotFound("Person not found.");
+                }
 
-            return Ok(person);
+                return Ok(person);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
  
         [HttpGet("color/{color}")]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get(string color)
         {
-            var persons = await this._personService.GetPersonByColorAsync(color);
-            if (!persons.Any())
+            try
             {
-                return NotFound("Persons not found.");
-            }
+                var persons = await this._personService.GetPersonByColorAsync(color);
+                if (!persons.Any())
+                {
+                    return NotFound("Persons not found.");
+                }
 
-            return Ok(persons);
+                return Ok(persons);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost]
@@ -103,9 +124,15 @@ namespace MyColor.API.Controllers
             if (personDto == null)
                 return BadRequest("Person not found.");
 
-            await this._personService.RemoveAsync(id);
-
-            return Ok(personDto);
+            try
+            {
+                await this._personService.RemoveAsync(id);
+                return Ok(personDto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

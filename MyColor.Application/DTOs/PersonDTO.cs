@@ -17,7 +17,7 @@ namespace MyColor.Application.DTOs
         [DisplayName("lastname")]
         public string LastName { get;  set; }
 
-        [MaxLength(100)]
+        [MaxLength(10)]
         [DisplayName("zipcode")]
         public string ZipCode { get;  set; }
 
