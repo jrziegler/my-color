@@ -1,5 +1,6 @@
 using FluentAssertions;
 using MyColor.Domain.Entities;
+using MyColor.Domain.Utils;
 using MyColor.Domain.Validation;
 using System;
 using Xunit;
@@ -85,6 +86,15 @@ namespace MyColor.Domain.Tests
                 .WithMessage("Invalid zipcode. Zipcode must have at least 5 characters.");
         }
 
+        [Fact(DisplayName = "Create Person with zipcode greater than 10 characters")]
+        public void CreatePerson_WithGreaterZipcode_DomainExceptionInvalidZipcode()
+        {
+            Action action = () => new Person(1, "Tony", "Stark", "987654321011", "California", 4);
+            action.Should()
+                .Throw<DomainExceptionValidation>()
+                .WithMessage("Invalid zipcode. Zipcode contains more than 10 characters.");
+        }
+
         [Fact(DisplayName = "Create Person with null city value")]
         public void CreatePerson_WithNullCityValue_ResultObjectValidState()
         {
@@ -101,22 +111,14 @@ namespace MyColor.Domain.Tests
                 .NotThrow<DomainExceptionValidation>();
         }
 
-        //TODO: new tests
-        //[Fact(DisplayName = "Create Person with null color value")]
-        //public void CreatePerson_WithNullColorValue_ResultObjectValidState()
-        //{
-        //    Action action = () => new Person(1, "Tony", "Stark", "10210", "California", null);
-        //    action.Should()
-        //        .NotThrow<DomainExceptionValidation>();
-        //}
-
-        //[Fact(DisplayName = "Create Person missing color value")]
-        //public void CreatePerson_MissingColorValue_ResultObjectValidState()
-        //{
-        //    Action action = () => new Person(1, "Tony", "Stark", "10210", "California", "");
-        //    action.Should()
-        //        .NotThrow<DomainExceptionValidation>();
-        //}
+        [Fact(DisplayName = "Create Person with invalid color value")]
+        public void CreatePerson_WithInvalidColorValue_ResultObjectValidState()
+        {
+            Action action = () => new Person(1, "Tony", "Stark", "10210", "California", 8);
+            action.Should()
+                .Throw<DomainExceptionValidation>()
+                .WithMessage($"Invalid color. The color must be from the list: {ApplicationColors.ListColors()}");
+        }
 
         [Fact(DisplayName = "Create Person with negative id")]
         public void CreatePerson_WithNegativeIdValue_DomainExceptionInvalidId()

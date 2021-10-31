@@ -19,7 +19,7 @@ namespace MyColor.Domain.Utils
              new Color(7, "weiß")
         });
         
-        private static string listColors()
+        public static string ListColors()
         {
             string colors = string.Empty;
             foreach (Color c in ListOfColors)
@@ -39,9 +39,14 @@ namespace MyColor.Domain.Utils
         public static int GetColorIdByName(string name)
         {
             Color? color = ListOfColors.FirstOrDefault(x => x.Name == name.ToLower());
-            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} does not exist. The colors are: {listColors()}");
+            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} does not exist. The colors are: {ListColors()}");
 
             return (int)color?.Id;
+        }
+
+        public static bool ContainColor(int id)
+        {
+            return ListOfColors.Any(x => x.Id == id);
         }
     }
 }

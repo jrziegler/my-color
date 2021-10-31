@@ -1,4 +1,5 @@
-﻿using MyColor.Domain.Validation;
+﻿using MyColor.Domain.Utils;
+using MyColor.Domain.Validation;
 
 namespace MyColor.Domain.Entities
 {
@@ -28,6 +29,9 @@ namespace MyColor.Domain.Entities
 
             DomainExceptionValidation.When(zipCode?.Length > 10,
                 "Invalid zipcode. Zipcode contains more than 10 characters.");
+
+            DomainExceptionValidation.When(!ApplicationColors.ContainColor(colorId),
+                $"Invalid color. The color must be from the list: {ApplicationColors.ListColors()}");
 
             this.Name = name;
             this.LastName = lastName;
