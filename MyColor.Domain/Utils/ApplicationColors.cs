@@ -12,12 +12,21 @@ namespace MyColor.Domain.Utils
         (new[] {
              new Color(1, "blau"),
              new Color(2, "grün"),
-             new Color(3, "viollet"),
+             new Color(3, "violett"),
              new Color(4, "rot"),
              new Color(5, "geld"),
              new Color(6, "türkis"),
              new Color(7, "weiß")
         });
+        
+        private static string listColors()
+        {
+            string colors = string.Empty;
+            foreach (Color c in ListOfColors)
+                colors = string.Concat(colors, $"[{c.Name}]");
+            
+            return colors;
+        }
 
         public static string GetColorNameById(int id)
         {
@@ -30,7 +39,7 @@ namespace MyColor.Domain.Utils
         public static int GetColorIdByName(string name)
         {
             Color? color = ListOfColors.FirstOrDefault(x => x.Name == name.ToLower());
-            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} not found.");
+            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} does not exist. The colors are: {listColors()}");
 
             return (int)color?.Id;
         }
