@@ -10,7 +10,6 @@ using MyColor.Infra.Data.Csv;
 using MyColor.Infra.Data.Interfaces;
 using MyColor.Infra.Data.Mappings;
 using MyColor.Infra.Data.Repositories;
-using MyColor.Infra.Logging.Interfaces;
 using MyColor.Infra.Logging.Services;
 
 namespace MyColor.Infra.IoC

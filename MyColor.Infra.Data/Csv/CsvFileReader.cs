@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using MyColor.Domain.Entities;
+using MyColor.Domain.Interfaces;
 using MyColor.Infra.Data.Interfaces;
 using MyColor.Infra.Data.Mappings;
 using System;
@@ -15,9 +16,12 @@ namespace MyColor.Infra.Data.Csv
     {
         private const string FILE_NAME = "sample-input.csv";
         private const string FILE_PATH = "../MyColor.Infra.Data/Csv/";
+        private readonly ILoggerService _logger;
 
-        public CsvFileReader()
-        { }
+        public CsvFileReader(ILoggerService logger)
+        {
+            _logger = logger;
+        }
 
         public IEnumerable<Person> LoadDataFromFile()
         {
@@ -32,6 +36,7 @@ namespace MyColor.Infra.Data.Csv
                 IgnoreBlankLines = true,
                 LineBreakInQuotedFieldIsBadData = true,
             };
+            _logger.LogInfo("Loading data from CSV file.");
 
             try
             {
@@ -45,13 +50,14 @@ namespace MyColor.Infra.Data.Csv
 
                         foreach (PersonFromCsv r in records)
                         {
+                            _logger.LogInfo($"[LOADING] Trying to convert RowNo: {csv.Context.Parser.RawRow}.");
                             string[] record = r.ToCsv().Split(",");
                             if (string.IsNullOrWhiteSpace(record.ElementAt(0)) ||
                                 string.IsNullOrWhiteSpace(record.ElementAt(1)) ||
                                 string.IsNullOrWhiteSpace(record.ElementAt(2)) ||
                                 string.IsNullOrWhiteSpace(record.ElementAt(3)))
                             {
-                                listOfBadRecords.Add($"RowNo: {csv.Context.Parser.RawRow}, Record: {csv.Parser.RawRecord}");
+                                listOfBadRecords.Add($" >>> RowNo: {csv.Context.Parser.RawRow}, Record: '{csv.Parser.RawRecord.Trim()}'");
                             }
                             else
                             {
@@ -64,6 +70,7 @@ namespace MyColor.Infra.Data.Csv
                                         (int)r.Color
                                     );
 
+                                _logger.LogInfo($"[LOADING] Adding record to the list of persons.");
                                 listOfPersons.Add(p);
                             }
                         }
@@ -73,14 +80,14 @@ namespace MyColor.Infra.Data.Csv
             }
             catch (Exception e)
             {
-                //TODO: Error in Log
+                _logger.LogError(e.Message);
                 throw new Exception(e.Message);
             }
             finally
             {
                 if (listOfBadRecords.Any())
-                    //TODO: list of bad records inside a log
-                    listOfBadRecords.Count();
+                    foreach (string badRecord in listOfBadRecords)
+                        _logger.LogError($"[LOADING][BAD_RECORD] row could not be converted.{badRecord}.");
             }
         }
     }

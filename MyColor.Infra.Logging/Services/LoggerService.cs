@@ -1,4 +1,4 @@
-﻿using MyColor.Infra.Logging.Interfaces;
+﻿using MyColor.Domain.Interfaces;
 using NLog;
 using System;
 using System.IO;

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
-using MyColor.Infra.Logging.Interfaces;
+using MyColor.Domain.Interfaces;
 
 namespace MyColor.API.Controllers
 {
