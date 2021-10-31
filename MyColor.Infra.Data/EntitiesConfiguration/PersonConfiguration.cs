@@ -9,6 +9,7 @@ namespace MyColor.Infra.Data.EntitiesConfiguration
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.HasKey(t => t.Id);
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.Name).HasMaxLength(100).IsRequired();
             builder.Property(p => p.LastName).HasMaxLength(100).IsRequired();
             builder.Property(p => p.ZipCode).HasMaxLength(10);
