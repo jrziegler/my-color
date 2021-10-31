@@ -25,6 +25,21 @@ namespace MyColor.API.AppExceptionMiddleware
 			{
 				await _next(httpContext);
 			}
+			catch (DomainExceptionValidation de)
+            {
+				_logger.LogWarn(de.Message);
+				await HandleExceptionAsync(httpContext, de);
+            }
+			catch (ArgumentException ae)
+            {
+				_logger.LogWarn(ae.Message);
+				await HandleExceptionAsync(httpContext, ae);
+            }
+			catch (AppServiceException ae)
+			{
+				_logger.LogWarn(ae.Message);
+				await HandleExceptionAsync(httpContext, ae);
+			}
 			catch (Exception e)
 			{
 				_logger.LogError($"Something went wrong: {e}");
