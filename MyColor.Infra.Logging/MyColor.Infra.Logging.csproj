@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="NLog.config" />
+    <None Remove="NLog.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config" />
+    <Content Include="NLog.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
+  </ItemGroup>
+
+</Project>

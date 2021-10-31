@@ -18,7 +18,6 @@
     <None Remove="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.7.4" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
   <ItemGroup>

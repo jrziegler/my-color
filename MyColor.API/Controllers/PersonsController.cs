@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyColor.API.Interfaces;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
+using MyColor.Infra.Logging.Interfaces;
 
 namespace MyColor.API.Controllers
 {

@@ -1,4 +1,4 @@
-﻿namespace MyColor.API.Interfaces
+﻿namespace MyColor.Infra.Logging.Interfaces
 {
     public interface ILoggerService
     {
