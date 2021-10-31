@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MyColor.API.Interfaces;
 using MyColor.Application.DTOs;
 using MyColor.Application.Interfaces;
-//using MyColor.Infra.Logging.Interfaces;
 
 namespace MyColor.API.Controllers
 {
@@ -14,15 +14,15 @@ namespace MyColor.API.Controllers
     public class PersonsController : ControllerBase
     {
         private readonly IPersonService _personService;
-        //private readonly ILoggerManager _logger;
+        private readonly ILoggerService _logger;
 
-        public PersonsController(IPersonService personService)
+        public PersonsController(IPersonService personService, ILoggerService logger)
         {
             this._personService = personService ??
                 throw new ArgumentNullException(nameof(personService));
 
-            //this._logger = logger ??
-            //    throw new ArgumentNullException(nameof(logger));
+            this._logger = logger ??
+                throw new ArgumentNullException(nameof(logger));
         }
 
         /// <summary>
@@ -34,6 +34,7 @@ namespace MyColor.API.Controllers
         {
             try
             {
+                _logger.LogInfo("Trying to get persons.");
                 var persons = await this._personService.GetPersonsAsync();
                 if (persons == null)
                 {

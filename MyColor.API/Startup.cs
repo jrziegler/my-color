@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyColor.API.Interfaces;
+using MyColor.API.Services;
 using MyColor.Infra.IoC;
 
 namespace MyColor.API
@@ -30,6 +32,8 @@ namespace MyColor.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddInfrastructure(Configuration);
+            //TODO: must to include in IoC
+            services.AddSingleton<ILoggerService, LoggerService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
