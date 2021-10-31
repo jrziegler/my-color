@@ -23,13 +23,17 @@ namespace MyColor.API
         {
             Configuration = configuration;
         }
-
+ 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddInfrastructure(Configuration);
+            if (Configuration.GetValue<bool>("DataSourceFromCsv"))
+                services.AddInfrastructure(Configuration, new OptionsBuilderDbInMemory());
+            else
+                services.AddInfrastructure(Configuration, new OptionsBuilderDbSqlite());
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

@@ -126,7 +126,7 @@ namespace MyColor.Domain.Tests
             Action action = () => new Person(-1, "Tony", "Stark", "10210", "California", 4);
             action.Should()
                 .Throw<DomainExceptionValidation>()
-                .WithMessage("Invalid id: -1. Id must be greater than 0.");
+                .WithMessage("Invalid id: -1. Id must be greater or equals 0.");
         }
     }
 }

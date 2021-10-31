@@ -13,8 +13,8 @@ namespace MyColor.Domain.Entities
 
         private void ValidateId(int id)
         {
-            DomainExceptionValidation.When(id < 1,
-                   $"Invalid id: {id}. Id must be greater than 0.");
+            DomainExceptionValidation.When(id < 0,
+                   $"Invalid id: {id}. Id must be greater or equals 0.");
 
             Id = id;
         }
