@@ -57,7 +57,7 @@ namespace MyColor.Infra.Data.Csv
                                 string.IsNullOrWhiteSpace(record.ElementAt(2)) ||
                                 string.IsNullOrWhiteSpace(record.ElementAt(3)))
                             {
-                                listOfBadRecords.Add($" >>> RowNo: {csv.Context.Parser.RawRow}, Record: '{csv.Parser.RawRecord.Trim()}'");
+                                listOfBadRecords.Add($">>> RowNo: {csv.Context.Parser.RawRow}, Record: '{csv.Parser.RawRecord.Trim()}'");
                             }
                             else
                             {
@@ -70,12 +70,12 @@ namespace MyColor.Infra.Data.Csv
                                         (int)r.Color
                                     );
 
-                                _logger.LogInfo($"[LOADING] Adding record to the list of persons.");
                                 listOfPersons.Add(p);
                             }
                         }
                     }
                 }
+                _logger.LogInfo($"[LOADING] Adding {listOfPersons.Count()} persons at the database.");
                 return listOfPersons;
             }
             catch (Exception e)
@@ -86,8 +86,12 @@ namespace MyColor.Infra.Data.Csv
             finally
             {
                 if (listOfBadRecords.Any())
+                {
+                    _logger.LogError($"[LOADING][BAD_RECORD] {listOfBadRecords.Count()} rows could not be inserted at the database.");
+
                     foreach (string badRecord in listOfBadRecords)
-                        _logger.LogError($"[LOADING][BAD_RECORD] row could not be converted.{badRecord}.");
+                        _logger.LogError($"[LOADING][BAD_RECORD] row could not be converted. {badRecord}.");
+                }
             }
         }
     }
