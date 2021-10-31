@@ -32,21 +32,11 @@ namespace MyColor.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get()
         {
-            try
-            {
-                _logger.LogInfo("Trying to get persons.");
-                var persons = await this._personService.GetPersonsAsync();
-                if (persons == null)
-                {
-                    return NotFound("Persons not found.");
-                }
+            var persons = await this._personService.GetPersonsAsync();
+            if (persons == null)
+                throw new ArgumentException("Persons not found.");
 
-                return Ok(persons);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(persons);
         }
 
         /// <summary>
@@ -57,20 +47,11 @@ namespace MyColor.API.Controllers
         [HttpGet("{id:int}", Name = "GetPerson")]
         public async Task<ActionResult<PersonDTO>> Get(int id)
         {
-            try
-            {
-                var person = await this._personService.GetPersonByIdAsync(id);
-                if (person == null)
-                {
-                    return NotFound("Person not found.");
-                }
+            var person = await this._personService.GetPersonByIdAsync(id);
+            if (person == null)
+                throw new ArgumentException("Person not found.");
 
-                return Ok(person);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(person);
         }
 
         /// <summary>
@@ -81,20 +62,11 @@ namespace MyColor.API.Controllers
         [HttpGet("color/{color}")]
         public async Task<ActionResult<IEnumerable<PersonDTO>>> Get(string color)
         {
-            try
-            {
-                var persons = await this._personService.GetPersonByColorAsync(color);
-                if (!persons.Any())
-                {
-                    return NotFound("Persons not found.");
-                }
+            var persons = await this._personService.GetPersonByColorAsync(color);
+            if (!persons.Any())
+                throw new ArgumentException($"No persons with color {color} found.");
 
-                return Ok(persons);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            return Ok(persons);
         }
 
         /// <summary>
@@ -106,17 +78,10 @@ namespace MyColor.API.Controllers
         public async Task<ActionResult> Post([FromBody] PersonDTO personDto)
         {
             if (personDto == null)
-                return BadRequest("Invalid data.");
+                throw new ApplicationException("Invalid data.");
 
-            try
-            {
-                personDto = await _personService.AddAsync(personDto);
-                return new CreatedAtRouteResult("GetPerson", new { id = personDto.Id }, personDto);
-            }
-            catch(Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            personDto = await _personService.AddAsync(personDto);
+            return new CreatedAtRouteResult("GetPerson", new { id = personDto.Id }, personDto);
         }
 
         /// <summary>
@@ -129,20 +94,13 @@ namespace MyColor.API.Controllers
         public async Task<ActionResult> Put(int id, [FromBody] PersonDTO personDto)
         {
             if (id != personDto.Id)
-                return BadRequest("The field id does not conform with requested in the body.");
+                throw new ApplicationException("The field id does not conform with requested in the body.");
 
             if (personDto == null)
-                return BadRequest("Invalid data.");
+                throw new ArgumentException($"Person with id {id} not found.");
 
-            try
-            {
-                await _personService.UpdateAsync(personDto);
-                return Ok(personDto);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await this._personService.UpdateAsync(personDto);
+            return Ok(personDto);
         }
 
         /// <summary>
@@ -156,21 +114,10 @@ namespace MyColor.API.Controllers
             var personDto = await this._personService.GetPersonByIdAsync(id);
 
             if (personDto == null)
-            {
-                string msg = "Person not found.";
-                //this._logger.LogWarn(msg);
-                return NotFound(msg);
-            }
+                throw new ArgumentException($"Person with id {id} not found.");
 
-            try
-            {
-                await this._personService.RemoveAsync(id);
-                return Ok(personDto);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            await this._personService.RemoveAsync(id);
+            return Ok(personDto);
         }
     }
 }
