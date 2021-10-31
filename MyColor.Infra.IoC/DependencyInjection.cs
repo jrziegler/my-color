@@ -19,9 +19,6 @@ namespace MyColor.Infra.IoC
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration, IOptionsBuilder optionsBuilder)
         {
-            /*services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase(configuration.GetConnectionString("DefaultConnection")));
-            */
             services.AddDbContext<ApplicationDbContext>(options => optionsBuilder.DefineDb(options, configuration));
 
             services.AddScoped<IDbInitializer, DbInitializer>();
