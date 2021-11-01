@@ -55,7 +55,7 @@ namespace MyColor.API.AppExceptionMiddleware
 				DomainExceptionValidation => (int)HttpStatusCode.BadRequest,
 				AppServiceException => (int)HttpStatusCode.BadRequest,
 				ApplicationException => (int)HttpStatusCode.BadRequest,
-                ArgumentException => (int)HttpStatusCode.NotFound,
+                ArgumentException => (int)HttpStatusCode.NoContent,
 				_ => (int)HttpStatusCode.InternalServerError
 			};
 

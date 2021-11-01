@@ -23,7 +23,7 @@ namespace MyColor.Domain.Utils
         {
             string colors = string.Empty;
             foreach (Color c in ListOfColors)
-                colors = string.Concat(colors, $"[{c.Name}]");
+                colors = string.Concat(colors, $"{c.Name} ");
             
             return colors;
         }
@@ -31,17 +31,13 @@ namespace MyColor.Domain.Utils
         public static string GetColorNameById(int id)
         {
             Color? color = ListOfColors.FirstOrDefault(x => x.Id == id);
-            DomainExceptionValidation.When(color == null, $"Color with id {id} not found."); 
-
-            return color?.Name;
+            return color?.Name ?? string.Empty;
         }
 
         public static int GetColorIdByName(string name)
         {
             Color? color = ListOfColors.FirstOrDefault(x => x.Name == name.ToLower());
-            DomainExceptionValidation.When(color?.Name == null, $"Color with name {name} does not exist. The colors are: {ListColors()}");
-
-            return (int)color?.Id;
+            return color?.Id ?? 0;
         }
 
         public static bool ContainColor(int id)
