@@ -14,7 +14,7 @@ namespace MyColor.Domain.Utils
              new Color(2, "grün"),
              new Color(3, "violett"),
              new Color(4, "rot"),
-             new Color(5, "geld"),
+             new Color(5, "gelb"),
              new Color(6, "türkis"),
              new Color(7, "weiß")
         });
