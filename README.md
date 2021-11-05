@@ -1,4 +1,4 @@
-# Assecor Assessment Test (DE)
+# MyColor (DE)
 
 ## Zielsetzung
 
@@ -82,7 +82,7 @@ Das Ausgabeformat der Daten ist als `application/json` festgelegt. Die Schnittst
 
 Denk an deine zukünftigen Kollegen, und mach es ihnen nicht zu einfach, indem du deine Lösung öffentlich zur Schau stellst. Danke!
 
-# Assecor Assessment Test (EN)
+# MyColor (EN)
 
 ## goal
 
@@ -163,5 +163,3 @@ the return content type is `application/json`. The interface should offer the fo
 * implement the project with MSBuild in mind for CI using TFS/DevOps when using .NET, or as a Maven/Gradle project in Java
 * Implement an additional **POST** /persons to add new people to the dataset
 * Add a secondary data source (e.g. database via EF or JPA)
-
-Think about your potential future colleagues, and do not make it too easy for them by posting your solution publicly. Thank you!
