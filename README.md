@@ -86,7 +86,7 @@ Denk an deine zukünftigen Kollegen, und mach es ihnen nicht zu einfach, indem d
 
 ## goal
 
-You are to implement a RESTful web interface. The choice of framework and stack is yours between .NET (C#) or Java. It has to fulfull the following criteria:
+You are to implement a RESTful web interface. The choice of framework and stack it's yours between .NET (C#) or Java. It has to fulfill the following criteria:
 
 * You should be able to manage persons and their favourite colour using the interface
 * The application should be able to read the date from the CSV source, without modifying the source file
